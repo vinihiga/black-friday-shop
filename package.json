@@ -1,0 +1,29 @@
+{
+  "name": "black-friday-shop",
+  "version": "1.0.0",
+  "description": "An e-commerce simulator",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "release": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vinihiga/black-friday-shop.git"
+  },
+  "author": "Vinicius Hiroshi Higa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vinihiga/black-friday-shop/issues"
+  },
+  "homepage": "https://github.com/vinihiga/black-friday-shop#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.2",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
+  }
+}
