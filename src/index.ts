@@ -1,25 +1,11 @@
-import express, {
-  json,
-  type Express,
-  type NextFunction,
-  type Request,
-  type Response,
-} from "express";
+import express, { type Express, type Request, type Response } from "express";
+import customLogger from "./middlewares/customLogger.ts";
+import customRouter from "./routes/customRouter.ts";
 
 const app: Express = express();
 
-const myLogger = (req: Request, res: Response, next: NextFunction) => {
-  console.log(`[LOG] Receiving request from ${req.ip} to ${req.path}`);
-  next();
-};
-
 app.use(express.json());
-app.use(myLogger);
-
-app.get("/", (req: Request, res: Response) => {
-  res.send({
-    message: "Hello World!",
-  });
-});
+app.use(customLogger);
+app.use("/cart", customRouter);
 
 app.listen(3000);
