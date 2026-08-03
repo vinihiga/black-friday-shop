@@ -1,4 +1,4 @@
-import express, { type Express, type Request, type Response } from "express";
+import express, { type Express } from "express";
 import customLogger from "./middlewares/customLogger.ts";
 import customRouter from "./routes/customRouter.ts";
 
@@ -8,4 +8,8 @@ app.use(express.json());
 app.use(customLogger);
 app.use("/cart", customRouter);
 
-app.listen(3000);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`[INFO] Server running on port ${PORT}`);
+});
