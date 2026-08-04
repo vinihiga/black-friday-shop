@@ -1,16 +1,10 @@
 import type { Request, Response } from "express";
-import type { PaymentInfoRequest } from "../dtos/PaymentInfoRequest.ts";
+import {
+  PaymentMethod,
+  type PaymentInfoRequest,
+} from "../dtos/PaymentInfoRequest.ts";
 import { prisma } from "../lib/prisma.ts";
 import "dotenv/config";
-
-export const validMethods = [
-  "credit_card",
-  "debit_card",
-  "pix",
-  "payment_slip",
-] as const;
-
-export type PaymentMethod = (typeof validMethods)[number];
 
 export const getCart = async (req: Request, res: Response) => {
   let id: number;
@@ -48,23 +42,21 @@ export const payCart = async (req: Request, res: Response) => {
   let partialAmount: number;
   let totalAmount: number;
   let installments: number;
-  let method: PaymentMethod;
+  let method: PaymentMethod | undefined;
 
   try {
     partialAmount = Number(req.body.partialAmount);
     totalAmount = Number(req.body.totalAmount);
     installments = Number(req.body.installments);
-    method = req.body.method;
   } catch {
     return res.status(400).send();
   }
 
-  if (
-    typeof partialAmount !== "number" ||
-    typeof totalAmount !== "number" ||
-    typeof installments !== "number" ||
-    !(validMethods as readonly string[]).includes(method)
-  ) {
+  method = Object.values(PaymentMethod).includes(req.body.method)
+    ? (req.body.method as PaymentMethod)
+    : undefined;
+
+  if (method == undefined) {
     return res.status(400).send();
   }
 

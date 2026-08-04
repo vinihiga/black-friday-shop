@@ -1,15 +1,11 @@
-export function isPaymentMethod(method: string): method is PaymentMethod {
-  return (validMethods as readonly string[]).includes(method);
-}
+export const PaymentMethod = {
+  CREDIT_CARD: "credit_card",
+  DEBIT_CARD: "debit_card",
+  PIX: "pix",
+  PAYMENT_SLIP: "payment_slip",
+} as const;
 
-const validMethods = [
-  "credit_card",
-  "debit_card",
-  "pix",
-  "payment_slip",
-] as const;
-
-export type PaymentMethod = (typeof validMethods)[number];
+export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod];
 
 export type PaymentInfoRequest = {
   partialAmount: number;
