@@ -4,7 +4,6 @@ import {
   type PaymentInfoRequest,
 } from "../dtos/PaymentInfoRequest.ts";
 import { prisma } from "../lib/prisma.ts";
-import "dotenv/config";
 
 export const getCart = async (req: Request, res: Response) => {
   let id: number;

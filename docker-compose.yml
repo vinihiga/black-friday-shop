@@ -12,8 +12,8 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=3000
-      - DATABASE_URL=postgres://postgres:postgres@db:5432/black_friday_shop_db
-    command: npm run dev
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/test
+    command: ["sh", "-c", "npx prisma db push && npm run dev"]
     depends_on:
       db:
         condition: service_healthy
@@ -24,16 +24,15 @@ services:
 
   db:
     image: postgres:17-alpine
-    container_name: black_friday_shop_db
+    container_name: postgress_app
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: black_friday_shop_db
+      POSTGRES_DB: test
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    # Otimização extrema de memória para Macbooks com pouca RAM livre (~50-100MB RAM)
     command: >
       postgres
       -c shared_buffers=16MB

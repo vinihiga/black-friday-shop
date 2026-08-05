@@ -1,10 +1,12 @@
 FROM node:22-alpine
 
 WORKDIR /app
+ENV DATABASE_URL="postgresql://postgres:postgres@db:5432/test?schema=public&sslmode=disable&connect_timeout=10"
 
 COPY package*.json ./
 RUN npm ci --omit=optional || npm install
 COPY . .
+RUN npx prisma generate
 EXPOSE 3000
 
-CMD ["npx", "tsx", "src/index.ts"]
+CMD npx prisma db push && npx tsx src/index.ts
