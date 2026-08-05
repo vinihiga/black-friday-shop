@@ -1,19 +1,19 @@
 services:
-  app:
+  cart:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: black_friday_shop_app
+    container_name: cart
     ports:
       - "3000:3000"
     volumes:
-      - .:/app
-      - /app/node_modules
+      - .:/cart
+      - /cart/node_modules
     environment:
       - NODE_ENV=development
       - PORT=3000
       - DATABASE_URL=postgres://postgres:postgres@db:5432/test
-    command: ["sh", "-c", "npx prisma db push && npm run dev"]
+    command: ["sh", "-c", "npx prisma db push && npm run dev:cart"]
     depends_on:
       db:
         condition: service_healthy
