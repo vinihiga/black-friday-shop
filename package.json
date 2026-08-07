@@ -5,8 +5,8 @@
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
-    "dev:cart": "tsx watch src/cart/index.ts",
-    "dev:catalog": "tsx watch src/catalog/index.ts",
+    "dev:cart": "tsx watch --env-file=.env src/cart/index.ts",
+    "dev:catalog": "tsx watch --env-file=.env src/catalog/index.ts",
     "release": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
