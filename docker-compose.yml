@@ -2,7 +2,7 @@ services:
   cart:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./docker/Dockerfile.cart
     container_name: cart
     ports:
       - "3000:3000"
@@ -13,8 +13,31 @@ services:
       - NODE_ENV=development
       - PORT=3000
       - DATABASE_URL=postgres://postgres:postgres@db:5432/test
-    command: ["sh", "-c", "npx prisma db push && npm run dev:cart"]
     depends_on:
+      db:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+
+  catalog:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.catalog
+    container_name: catalog
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/cart
+      - /cart/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/test
+    depends_on:
+      cart:
+        condition: service_started
       db:
         condition: service_healthy
     deploy:

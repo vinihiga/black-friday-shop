@@ -3,7 +3,8 @@ import {
   PaymentMethod,
   type PaymentInfoRequest,
 } from "../dtos/PaymentInfoRequest.ts";
-import { prisma } from "../lib/prisma.ts";
+import { prisma } from "../../shared/lib/prisma.ts";
+import { updateCatalog } from "../services/catalogServices.ts";
 
 export const getCart = async (req: Request, res: Response) => {
   let id: number;
@@ -65,6 +66,12 @@ export const payCart = async (req: Request, res: Response) => {
     installments,
     method,
   };
+
+  const result = await updateCatalog();
+
+  if (!result) {
+    return res.status(500).send();
+  }
 
   // TODO: Implement payment processing logic using Prisma transactions or records as needed
 

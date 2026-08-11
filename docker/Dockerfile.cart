@@ -5,8 +5,12 @@ ENV DATABASE_URL="postgresql://postgres:postgres@db:5432/test?schema=public&sslm
 
 COPY package*.json ./
 RUN npm ci --omit=optional || npm install
-COPY . .
+COPY prisma.config.ts ./
+COPY tsconfig.json ./
+COPY prisma/ ./prisma/
+COPY src/cart/ ./src/cart/
+COPY src/shared/ ./src/shared/
 RUN npx prisma generate
 EXPOSE 3000
 
-CMD npx prisma db push && npx tsx src/index.ts
+CMD npx prisma db push && npx tsx src/cart/index.ts
