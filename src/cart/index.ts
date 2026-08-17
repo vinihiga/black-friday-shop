@@ -1,3 +1,4 @@
+import {} from "../shared/lib/instrumentation.ts";
 import express, { type Express } from "express";
 import customLogger from "../shared/middlewares/customLogger.ts";
 import customRouter from "./routes/customRouter.ts";
